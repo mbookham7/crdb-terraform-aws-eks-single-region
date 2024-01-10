@@ -1,19 +1,22 @@
-# CockroachDB  - Terraform Managed Google GKE Single-region Database
+# UNDER DEVELOPMENT
 
-This repo is the Terraform code to deploy a single CockroachDB Cluster into a GKE cluster into one region.
+# CockroachDB  - Terraform Managed Amazon EKS Single-region Database
 
-1. Login in to Google Cloud from the CLI with the `gcloud auth` command.
+This repo is the Terraform code to deploy a single CockroachDB Cluster into a EKS cluster into one region.
+
+1. Login in to Amazon Cloud for CLI access by setting the following environment variables.
 
 ```
-gcloud auth application-default login
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
 ```
 
 2. Update the `tfvars` file with you required settings prior to deploying your infrastructure.
 
 ```
-region_1 = "europe-west2"
-location_1 = "europe-west2-a"
-location_2 = "europe-west2-b"
+region_1 = "eu-west-1"
+location_1 = "eu-west-1a"
+location_2 = "eu-west-1b"
 prefix = "mb-crdb-sr"
 ```
 
@@ -39,10 +42,11 @@ terraform plan
 terraform apply --auto-approve
 ```
 
-6. When you have deployed your infrastructure you can add the GKE cluster to your local `KUBECONFIG` file. Once you have done this you will be able to communicate with your cluster via `kubectl`
+6. When you have deployed your infrastructure you can add the EKS cluster to your local `KUBECONFIG` file. Once you have done this you will be able to communicate with your cluster via `kubectl`
 
 ```
-gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region) --project $(gcloud config get-value project)
+aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw kubernetes_cluster_name)
+
 ```
 
 7. To be able to log on to the UI we need to create a user. To do this we need to deploy a pod with the cockroach binary and connect to our Cockroach cluster and add a user. First we deploy a pod into the correct namespace.

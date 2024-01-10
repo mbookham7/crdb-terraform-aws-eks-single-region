@@ -3,7 +3,7 @@ variable "prefix" {
 }
 
 variable "region_1" {
-  description = "The GCP Region in which all resources in this example should be provisioned"
+  description = "The AWS Region in which all resources in this example should be provisioned"
 }
 
 variable "location_1" {
@@ -15,28 +15,28 @@ variable "location_2" {
 }
 
 variable "location_1_vnet_address_space" {
-  description = "The GCP VNET address space for first location"
+  description = "The AWS VNET address space for first location"
   default = "10.2.0.0/16"
 }
 
 
 variable "location_1_subnet" {
-  description = "The GKE pod address space for first location"
+  description = "The EKS pod address space for first location"
   default = "10.2.0.0/20"
 }
 
 variable "location_2_subnet" {
-  description = "The GKE Service address space for first location"
+  description = "The EKS Service address space for first location"
   default = "10.2.16.0/20"
 }
 
 variable "location_1_public_subnet" {
-  description = "The GKE pod address space for first location"
+  description = "The EKS pod address space for first location"
   default = "10.2.32.0/20"
 }
 
 variable "location_2_public_subnet" {
-  description = "The GKE Service address space for first location"
+  description = "The EKS Service address space for first location"
   default = "10.2.48.0/20"
 }
 
@@ -52,7 +52,7 @@ variable "eks_pool_name" {
 
 variable "eks_vm_size" {
   description = "Node Pool Instance Size"
-  default = ["t3.small"]
+  default = ["m5.xlarge"]
 }
 
 variable "eks_node_count" {
