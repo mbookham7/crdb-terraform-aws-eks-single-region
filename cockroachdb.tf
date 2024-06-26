@@ -7,8 +7,7 @@
 # Create namespace in first region
 
 resource "kubernetes_namespace_v1" "ns_region_1" {
-  provider = kubernetes.region_1
-  depends_on = [aws_eks_node_group.private-nodes]
+  depends_on = [module.eks.eks_managed_node_groups]
   metadata {
     name = var.location_1
 
@@ -27,7 +26,6 @@ resource "kubernetes_namespace_v1" "ns_region_1" {
 # Region 1
 
 resource "kubernetes_service_account_v1" "serviceaccount_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb"
@@ -40,7 +38,6 @@ resource "kubernetes_service_account_v1" "serviceaccount_cockroachdb_region_1" {
 }
 
 resource "kubernetes_role_v1" "role_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb"
@@ -58,7 +55,6 @@ resource "kubernetes_role_v1" "role_cockroachdb_region_1" {
 }
 
 resource "kubernetes_cluster_role_v1" "clusterrole_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1] 
   metadata {
     name = "cockroachdb"
@@ -75,7 +71,6 @@ resource "kubernetes_cluster_role_v1" "clusterrole_cockroachdb_region_1" {
 }
 
 resource "kubernetes_role_binding_v1" "rolebinding_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name      = "cockroachdb"
@@ -99,7 +94,6 @@ resource "kubernetes_role_binding_v1" "rolebinding_cockroachdb_region_1" {
 }
 
 resource "kubernetes_cluster_role_binding_v1" "clusterrolebinding_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb"
@@ -125,7 +119,6 @@ resource "kubernetes_cluster_role_binding_v1" "clusterrolebinding_cockroachdb_re
 }
 
 resource "kubernetes_service" "service_cockroachdb_public_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb-public"
@@ -152,7 +145,6 @@ resource "kubernetes_service" "service_cockroachdb_public_region_1" {
 }
 
 resource "kubernetes_service" "service_cockroachdb_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb"
@@ -187,7 +179,6 @@ resource "kubernetes_service" "service_cockroachdb_region_1" {
 }
 
 resource "kubernetes_pod_disruption_budget_v1" "poddisruptionbudget_cockroachdb_budget_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb-budget"
@@ -207,7 +198,6 @@ resource "kubernetes_pod_disruption_budget_v1" "poddisruptionbudget_cockroachdb_
 }
 
 resource "kubernetes_stateful_set_v1" "statefulset_region_1_cockroachdb" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     annotations = {
@@ -407,7 +397,6 @@ resource "kubernetes_stateful_set_v1" "statefulset_region_1_cockroachdb" {
 ### Expose the Admin UI externally.
 
 resource "kubernetes_service" "service_cockroachdb_ui_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb-adminui"

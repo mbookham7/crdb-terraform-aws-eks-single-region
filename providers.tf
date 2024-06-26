@@ -1,20 +1,39 @@
 provider "aws" {
-  region = var.region_1
 
-#  assume_role {
-#   role_arn    = "arn:aws:iam::337380398238:role/TerraformAdminRole"
-#  }
+  region  = var.region_1
 }
 
-data "aws_eks_cluster_auth" "default" {
-  name = var.eks_cluster_name
+# Filter out local zones, which are not currently supported 
+# with managed node groups
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
+
+locals {
+  cluster_name = "crdb-sr-eks-${random_string.suffix.result}"
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}
+
+data "aws_eks_cluster" "crdb-cluster" {
+  name = module.eks.cluster_name
+}
+
+data "aws_eks_cluster_auth" "crdb-cluster-auth" {
+  name = module.eks.cluster_name
 }
 
 provider "kubernetes" {
-  alias                  = "region_1"
-  host                   = aws_eks_cluster.eks_cluster.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.eks_cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.default.token
+  host                   = data.aws_eks_cluster.crdb-cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.crdb-cluster.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.crdb-cluster-auth.token
 }
 
 provider "null" {

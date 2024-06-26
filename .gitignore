@@ -31,7 +31,7 @@ override.tf.json
 
 /certs 
 /my-safe-directory
-/europe-west2-a
+/eu-west-1a
 .terraform.*
 /.vscode/*
 creds.txt

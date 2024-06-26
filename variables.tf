@@ -3,7 +3,9 @@ variable "prefix" {
 }
 
 variable "region_1" {
-  description = "The AWS Region in which all resources in this example should be provisioned"
+    description = "AWS region"
+  type        = string
+  default     = "eu-north-1"
 }
 
 variable "location_1" {
@@ -30,19 +32,24 @@ variable "location_2_subnet" {
   default = "10.2.16.0/20"
 }
 
-variable "location_1_public_subnet" {
+variable "location_3_subnet" {
   description = "The EKS pod address space for first location"
   default = "10.2.32.0/20"
 }
 
-variable "location_2_public_subnet" {
-  description = "The EKS Service address space for first location"
+variable "location_1_public_subnet" {
+  description = "The EKS pod address space for first location"
   default = "10.2.48.0/20"
 }
 
-variable "eks_cluster_name" {
-  description = "Name of the EKS CLuster"
-  default = "crdb-eks-cluster"
+variable "location_2_public_subnet" {
+  description = "The EKS Service address space for first location"
+  default = "10.2.64.0/20"
+}
+
+variable "location_3_public_subnet" {
+  description = "The EKS Service address space for first location"
+  default = "10.2.80.0/20"
 }
 
 variable "eks_pool_name" {
@@ -52,7 +59,7 @@ variable "eks_pool_name" {
 
 variable "eks_vm_size" {
   description = "Node Pool Instance Size"
-  default = ["m5.xlarge"]
+  default = ["m5.2xlarge"]
 }
 
 variable "eks_node_count" {

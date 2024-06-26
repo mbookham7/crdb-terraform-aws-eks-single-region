@@ -47,7 +47,7 @@ resource "local_file" "ca_cert" {
 
 resource "local_file" "ca_cert_region_1" {
   content  = tls_self_signed_cert.ca_cert.cert_pem
-  filename = "${path.module}/${var.location_1}/certs/ca.crt"
+  filename = "${path.module}/certs/${var.location_1}/ca.crt"
 }
 
 
@@ -116,7 +116,7 @@ resource "tls_private_key" "node_cert_region_1" {
 
 resource "local_file" "node_cert_region_1_key" {
   content  = tls_private_key.node_cert_region_1.private_key_pem
-  filename = "${path.module}/${var.location_1}/certs/node.key"
+  filename = "${path.module}/certs/${var.location_1}/node.key"
 }
 
 
@@ -164,7 +164,7 @@ resource "tls_locally_signed_cert" "node_cert_region_1" {
 
 resource "local_file" "node_cert_region_1_cert" {
   content  = tls_locally_signed_cert.node_cert_region_1.cert_pem
-  filename = "${path.module}/${var.location_1}/certs/node.crt"
+  filename = "${path.module}/certs/${var.location_1}/node.crt"
 }
 
 # Upload Certificates as secrets to kubernetes
@@ -173,7 +173,6 @@ resource "local_file" "node_cert_region_1_cert" {
 
 # Region 1
 resource "kubernetes_secret_v1" "cockroachdb_client_root_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb.client.root"
@@ -191,7 +190,6 @@ resource "kubernetes_secret_v1" "cockroachdb_client_root_region_1" {
 
 # Region 1
 resource "kubernetes_secret_v1" "cockroachdb_node_region_1" {
-  provider = kubernetes.region_1
   depends_on = [kubernetes_namespace_v1.ns_region_1]
   metadata {
     name = "cockroachdb.node"

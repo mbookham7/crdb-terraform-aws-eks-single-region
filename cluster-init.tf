@@ -5,7 +5,6 @@ resource "time_sleep" "wait_120_seconds" {
 
 resource "kubernetes_job_v1" "cockroachdb_init_job" {
   depends_on = [time_sleep.wait_120_seconds]
-  provider = kubernetes.region_1
     metadata {
       name = "cockroachdb-client-secure"
 
@@ -41,4 +40,5 @@ resource "kubernetes_job_v1" "cockroachdb_init_job" {
         }
       }
     }
+  wait_for_completion = false
 }
