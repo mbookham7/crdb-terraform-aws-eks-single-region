@@ -1,5 +1,3 @@
-# UNDER DEVELOPMENT
-
 # CockroachDB  - Terraform Managed Amazon EKS Single-region Database
 
 This repo is the Terraform code to deploy a single CockroachDB Cluster into a EKS cluster into one region.
