@@ -43,8 +43,7 @@ terraform apply --auto-approve
 6. When you have deployed your infrastructure you can add the EKS cluster to your local `KUBECONFIG` file. Once you have done this you will be able to communicate with your cluster via `kubectl`
 
 ```
-aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw kubernetes_cluster_name)
-
+aws eks update-kubeconfig --region $(terraform output -raw region) --name $(terraform output -raw cluster_name)
 ```
 
 7. To be able to log on to the UI we need to create a user. To do this we need to deploy a pod with the cockroach binary and connect to our Cockroach cluster and add a user. First we deploy a pod into the correct namespace.
