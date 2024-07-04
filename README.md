@@ -66,7 +66,10 @@ GRANT admin TO craig;
 ```
 
 
-10. The terraform destroy command is a convenient way to destroy all remote objects managed by a particular Terraform configuration.
+10. In the AWS Console, navigate to the correct region and then to Elastic Kubernetes Service. Click on the newly created cluster, navigate to `resources` and in the left list click `Service and networking`. Under this section click `Service`. This lists all of the services created in the cluster, click on `cockroachdb-adminui`. In the info pane you will see `Load balancer URLs` listed, add this URL to your browser appending the edn with the port number `8080`
+
+
+11. The terraform destroy command is a convenient way to destroy all remote objects managed by a particular Terraform configuration.
 
 While you will typically not want to destroy long-lived objects in a production environment, Terraform is sometimes used to manage ephemeral infrastructure for development purposes, in which case you can use terraform destroy to conveniently clean up all of those temporary objects once you are finished with your work.
 
