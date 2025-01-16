@@ -256,7 +256,7 @@ resource "kubernetes_stateful_set_v1" "statefulset_region_1_cockroachdb" {
           command = [
             "/bin/bash",
             "-ecx",
-            "exec /cockroach/cockroach start --logtostderr --certs-dir /cockroach/cockroach-certs --advertise-host $(hostname -f) --http-addr 0.0.0.0 --join cockroachdb-0.cockroachdb.${var.location_1},cockroachdb-1.cockroachdb.${var.location_1} --locality=cloud=azure,region=azure-${var.location_1} --cache $(expr $MEMORY_LIMIT_MIB / 4)MiB --max-sql-memory $(expr $MEMORY_LIMIT_MIB / 4)MiB",
+            "exec /cockroach/cockroach start --logtostderr --certs-dir /cockroach/cockroach-certs --advertise-host $(hostname -f) --http-addr 0.0.0.0 --join cockroachdb-0.cockroachdb.${var.location_1},cockroachdb-1.cockroachdb.${var.location_1} --locality=cloud=aws,region=aws-${var.location_1} --cache $(expr $MEMORY_LIMIT_MIB / 4)MiB --max-sql-memory $(expr $MEMORY_LIMIT_MIB / 4)MiB",
             ]
 
           env {
