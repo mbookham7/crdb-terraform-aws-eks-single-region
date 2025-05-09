@@ -12,10 +12,10 @@ export AWS_SECRET_ACCESS_KEY=""
 2. Update the `tfvars` file with you required settings prior to deploying your infrastructure.
 
 ```
-region_1 = "eu-west-1"
-location_1 = "eu-west-1a"
-location_2 = "eu-west-1b"
-prefix = "mb-crdb-sr"
+export region_1 = "eu-west-1"
+export location_1 = "eu-west-1a"
+export location_2 = "eu-west-1b"
+export prefix = "mb-crdb-sr"
 ```
 
 3. To initialize the code you need to run the `terraform init` command. The `terraform init` command initializes a working directory containing Terraform configuration files. This is the first command that should be run after writing a new Terraform configuration or cloning an existing one from version control. It is safe to run this command multiple times.
@@ -64,6 +64,10 @@ kubectl exec -it cockroachdb-client-secure -n $(terraform output -raw crdb_names
 CREATE USER craig WITH PASSWORD 'cockroach';
 GRANT admin TO craig;
 ```
+
+SET CLUSTER SETTING cluster.organization = 'Mike';
+SET CLUSTER SETTING enterprise.license = 'crl-0-EIDs6bMJGAEiBE1pa2UoAQ';
+
 
 
 10. In the AWS Console, navigate to the correct region and then to Elastic Kubernetes Service. Click on the newly created cluster, navigate to `resources` and in the left list click `Service and networking`. Under this section click `Service`. This lists all of the services created in the cluster, click on `cockroachdb-adminui`. In the info pane you will see `Load balancer URLs` listed, add this URL to your browser appending the edn with the port number `8080`
